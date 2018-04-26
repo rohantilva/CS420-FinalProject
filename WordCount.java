@@ -14,13 +14,21 @@ public class WordCount {
     public static class WordMapper extends Mapper<Object, Text, Text, IntWritable> {
 	    private final static IntWritable one = new IntWritable(1);
 
+	private final N = 2; // N for N-grams
+
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	        String line = value.toString();
             line = line.toLowerCase(); // make lower case
             line = line.replaceAll("[^a-zA-Z]", ""); // get rid of non-alphabetic characters
 	        String[] all_words = line.split(" ");
-            for (int i = 0; i < all_words.length - 1; ++i) {
-                context.write(new Text(all_words[i] + " " + all_words[i + 1]), one);
+            for (int i = 0; i < all_words.length - N; ++i) {
+		// concatenate N words
+		String ngram = "";
+		for (int j = 0; j < N; ++j) {
+			ngram += all_words[i+j];
+		}
+		ngram = ngram.substring(0, str.length - 1); // take out extra space  			
+                context.write(new Text(ngram), one);
             } 
         }
     }
