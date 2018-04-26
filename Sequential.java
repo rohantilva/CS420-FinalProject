@@ -12,13 +12,13 @@ public class Sequential {
         String[] all_words = text.split(" ");
         HashMap<String, Integer> word_count = new HashMap<String, Integer>();
         for (int i = 0; i <= all_words.length - N; ++i) {
-		    // concatenate N words
-		    String ngram = "";
-		    for (int j = 0; j < N; ++j) {
-			    ngram += all_words[i+j];
-		        ngram += " ";
+            // concatenate N words
+            String ngram = "";
+            for (int j = 0; j < N; ++j) {
+                ngram += all_words[i+j];
+                ngram += " ";
             }
-		    ngram = ngram.substring(0, ngram.length() - 1); // take out extra space  			
+            ngram = ngram.substring(0, ngram.length() - 1); // take out extra space  			
             if (!word_count.containsKey(ngram)) {
                 word_count.put(ngram, 1);
             } else {
