@@ -11,7 +11,7 @@ public class Sequential {
         text = text.replaceAll("[^A-Za-z ]", "");;
         String[] all_words = text.split(" ");
         HashMap<String, Integer> word_count = new HashMap<String, Integer>();
-        for (int i = 0; i < all_words.length - N; ++i) {
+        for (int i = 0; i <= all_words.length - N; ++i) {
 		    // concatenate N words
 		    String ngram = "";
 		    for (int j = 0; j < N; ++j) {
