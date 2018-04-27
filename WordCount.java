@@ -14,14 +14,17 @@ public class WordCount {
     public static class WordMapper extends Mapper<Object, Text, Text, IntWritable> {
 	    
         private final static IntWritable one = new IntWritable(1);
-        private final N = 2; // N for N-grams
+        private final int N = 2; // N for N-grams
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
+            if (line == "\n") { //skip empty lines
+                return;
+            }
             line = line.toLowerCase(); // make lower case
             line = line.replaceAll("[^A-Za-z ]", ""); // get rid of non-alphabetic characters
             String[] all_words = line.split(" ");
-            for (int i = 0; i < all_words.length - N; ++i) {
+            for (int i = 0; i <= all_words.length - N; ++i) {
                 // concatenate N words
                 String ngram = "";
                 for (int j = 0; j < N; ++j) {
@@ -38,7 +41,7 @@ public class WordCount {
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0; 
             for (IntWritable val : values) {
-                sum += val.get();
+                sum += 1;
             }
             IntWritable res = new IntWritable();
             res.set(sum);
@@ -51,7 +54,7 @@ public class WordCount {
         Job job = Job.getInstance(conf, "n-gram counter");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(WordMapper.class);
-        job.setCombinerClass();
+        //job.setCombinerClass();
         job.setReducerClass(WordReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
