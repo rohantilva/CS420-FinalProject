@@ -9,9 +9,6 @@ public class Sequential {
             file = args[0];
         } 
         Scanner scanner = new Scanner( new File(file));
-        //String text = scanner.useDelimiter("\\A").next();
-        
-        //StringBuilder builder = new StringBuilder();
         HashMap<String, Integer> word_count = new HashMap<String, Integer>();
 
         do {
@@ -39,8 +36,6 @@ public class Sequential {
         }
         } while(scanner.hasNextLine());
         
-        //String text = builder.toString();
-        
         scanner.close(); // Put this call in a finally block 
 
         Iterator it = word_count.entrySet().iterator();
@@ -49,5 +44,10 @@ public class Sequential {
             System.out.println(pair.getKey() + "\t" + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+        //Ideas: 
+        // HashMap of HashMaps to store probabilities for each given word?
+
     }
+
 }
