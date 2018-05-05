@@ -4,10 +4,11 @@ import java.io.*;
 public class Sequential {
     private static final int N = 2;
     public static void main(String[] args) throws IOException {
-        String file = "test.txt";
-        if (args[0] != null) {
+        String file = "100_bibles.txt";
+/*        if (args[0] != null) {
             file = args[0];
-        } 
+        } */
+        long start = System.currentTimeMillis();
         Scanner scanner = new Scanner( new File(file));
         HashMap<String, Integer> word_count = new HashMap<String, Integer>();
 
@@ -41,12 +42,11 @@ public class Sequential {
         Iterator it = word_count.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            System.out.println(pair.getKey() + "\t" + pair.getValue());
+            //System.out.println(pair.getKey() + "\t" + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
 
-        //Ideas: 
-        // HashMap of HashMaps to store probabilities for each given word?
+        System.out.println( ( (double) (System.currentTimeMillis() - start)/ (double) 1000) + "seconds");
 
     }
 
